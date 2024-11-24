@@ -1,0 +1,69 @@
+name: ✨ Make a ticket
+description: 새로운 기능 개선 및 추가 요청
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 기능 개선 요청
+        프로젝트 개선을 위한 의견을 제안해 주셔서 감사합니다.
+        아래 양식을 작성하여 더 나은 프로젝트를 만드는데 도움을 주세요.
+
+  - type: input
+    id: title
+    attributes:
+      label: 제목
+      description: "개선사항의 핵심을 간단히 설명해주세요."
+      placeholder: "ex) 검색 기능 지원"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 카테고리
+      description: "개선사항의 유형을 선택해주세요."
+      options:
+        - 📄 문서 (Documentation)
+        - 🔧 기능 개선 (Enhancement)
+        - 🆕 신규 기능 (New Feature)
+        - 🐞 버그 수정 (Bug Fix)
+        - 💡 아이디어 제안 (Idea)
+        - 🏗️ 프로젝트 구조 설정
+    validations:
+      required: true
+
+  - type: textarea
+    id: improvement-proposal
+    attributes:
+      label: 설명
+      description: "어떻게 개선되었으면 좋겠는지 설명해주세요."
+      placeholder: |
+        예상되는 개선사항:
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 참고 자료
+      description: "스크린샷이나 추가 설명이 필요한 내용을 작성해주세요."
+      placeholder: "참고 할 자료가 있다면 첨부 해주세요."
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: 제출 전 체크리스트
+      description: 제출하기 전에 다음 사항들을 확인해주세요.
+      options:
+        - label: 담당자 지정 (Assignee 설정)
+          required: true
+        - label: 적절한 라벨 추가 (Issue Label 설정)
+          required: true
+        - label: 개선사항 내용이 명확하게 작성되었는지 확인
+          required: true
+        - label: 유사한 Issue가 없는지 검색하고 확인함
+          required: true
