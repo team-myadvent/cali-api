@@ -1,0 +1,27 @@
+[project]
+name = "cali-api"
+version = "0.1.0"
+description = "Calendar Playlist"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "black==24.4.2",
+    "click>=8.1.7",
+    "djangorestframework>=3.15.2",
+    "ruff>=0.8.0",
+]
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+
+[tool.ruff.isort]
+lines-after-imports = 2
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+skip-magic-trailing-comma = false
+docstring-code-format = false
+docstring-code-line-length = "dynamic"
