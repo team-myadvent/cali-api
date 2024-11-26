@@ -21,14 +21,16 @@ THIRD_PARTY_APPS = [
 ]
 
 
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
+LOCAL_APPS = [
+    "user.apps.UserConfig",
 ]
+
+INSTALLED_APPS = [
+    *DJANGO_APPS,
+    *THIRD_PARTY_APPS,
+    *LOCAL_APPS,
+]
+
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -84,6 +86,9 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+AUTH_USER_MODEL = "user.SocialUser"
+
 LANGUAGE_CODE = "ko-kr"
 
 TIME_ZONE = "Asia/Seoul"
@@ -96,5 +101,10 @@ STATIC_URL = "/staticfiles/"
 
 MEDIA_URL = "/mediafiles/"
 
+APPEND_SLASH = False
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+from config.settings.jwt import *  # noqa
+from config.settings.rest_framework import *  # noqa
