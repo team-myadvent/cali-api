@@ -19,8 +19,9 @@ dependencies = [
 [tool.ruff]
 line-length = 120
 indent-width = 4
+ignore = ["F405"]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 lines-after-imports = 2
 
 [tool.ruff.format]
