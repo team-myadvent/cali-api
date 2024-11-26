@@ -104,3 +104,7 @@ MEDIA_URL = "/mediafiles/"
 APPEND_SLASH = False
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+from config.settings.jwt import *  # noqa
+from config.settings.rest_framework import *  # noqa
