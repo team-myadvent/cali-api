@@ -101,5 +101,6 @@ STATIC_URL = "/staticfiles/"
 
 MEDIA_URL = "/mediafiles/"
 
+APPEND_SLASH = False
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
