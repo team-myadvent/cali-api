@@ -11,8 +11,7 @@ from rest_framework_simplejwt.tokens import RefreshToken, Token
 
 from shared.mixin import APIViewResponseMixin
 from user.exceptions import InvalidAuthorizationCode, PlatformServerException, EmptyTokenException, EmptyKakaoAccount
-from user.models.models import SocialUser
-from user.models.platform_domain import KakaoAuthDomain
+from user.models import SocialUser, KakaoAuthDomain
 
 
 class KakaoOauthService:

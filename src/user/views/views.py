@@ -7,8 +7,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenVerifyView
 
 from shared.api import BaseAPIView
-from user.models.models import SocialUser
-from user.models.platform_domain import PlatformNames
+from user.models import SocialUser, PlatformNames
 from user.services.auth_service import KakaoOauthService
 from user.services.token_service import token_refresh
 
