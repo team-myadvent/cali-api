@@ -7,9 +7,10 @@ from django.contrib.auth.models import update_last_login
 from requests.models import Response as RequestsResponse
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, Token
 
-from user.exceptions import InvalidAuthorizationCode, PlatformServerException, EmptyTokenException
+from shared.mixin import APIViewResponseMixin
+from user.exceptions import InvalidAuthorizationCode, PlatformServerException, EmptyTokenException, EmptyKakaoAccount
 from user.models.models import SocialUser
 from user.models.platform_domain import KakaoAuthDomain
 
@@ -17,6 +18,7 @@ from user.models.platform_domain import KakaoAuthDomain
 class KakaoOauthService:
     _auth: Optional[Dict[str, Dict[str, str | int]]] = None
     kakao_auth_domain: KakaoAuthDomain = KakaoAuthDomain()
+    mixin_service = APIViewResponseMixin()
 
     @property
     def social_domain(self) -> Dict[str, str]:
@@ -94,18 +96,34 @@ class KakaoOauthService:
 
         return user_profile.json()
 
-    def get_username(self, user_profile: Dict[str, str | Dict]) -> str:
+    def get_user_personal_info(self, user_profile: Dict[str, str | Dict]) -> Dict[str, str]:
         """
-        Get user username by the user profile.
+        Get user personal info by the user profile.
+        - username, birthday, email, age_range, etc.
         """
-        username = user_profile.get("name")
+
+        kakao_account = user_profile.get("kakao_account", {})
+        profile = kakao_account.get("profile")
+
+        if not (kakao_account or profile):
+            raise EmptyKakaoAccount()
+
+        username = profile.get("nickname")
 
         if not username:
-            uuid = self.get_user_uuid(user_profile)[:4]
-            return f"Unkown{uuid}"
-        return username
+            uuid = self.get_user_uuid(user_profile)[:6]
+            username = f"Unkown{uuid}"
 
-    def get_user_uuid(self, user_profile: Dict[str, str | int]) -> str:
+        return {
+            "username": username,
+            "profile_image": profile.get("profile_image_url", ""),
+            "age_range": kakao_account.get("age_range", ""),
+            "email": kakao_account.get("email", ""),
+            "birthday": kakao_account.get("birthday", ""),
+        }
+
+    @staticmethod
+    def get_user_uuid(user_profile: Dict[str, str | int]) -> str:
         """
         Get user uuid by the user profile.
         """
@@ -119,12 +137,13 @@ class KakaoOauthService:
         """
         Login a social user.
         """
-        refresh: RefreshToken = RefreshToken.for_user(user)
+        refresh: Token = RefreshToken.for_user(user)
         access_token_lifetime: timedelta = settings.SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"]
         refresh_token_lifetime: timedelta = settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"]
 
-        data = {"message": "successfully logged in"}
-        response: Response = Response(data, status=status.HTTP_200_OK)
+        response: Response = self.mixin_service.success_response(
+            message="successfully logged in", status_code=status.HTTP_200_OK
+        )
 
         # NOTE: remove sametime option -> use default to possible different sites receive cookies
         response.set_cookie("access_token", str(refresh.access_token), max_age=access_token_lifetime)
@@ -137,18 +156,16 @@ class KakaoOauthService:
         """
         Register a new social user and redirect login method.
         """
-        username = user_profile.get("properties")
 
         user: SocialUser = SocialUser.objects.create(
             social_id=self.get_user_uuid(user_profile),
-            username=username,
             platform=platform,
+            **self.get_user_personal_info(user_profile),
         )
         return self.social_login(user)
 
-    @staticmethod
-    def social_logout() -> Response:
-        response = Response({"message": "Success Logout"}, status=status.HTTP_200_OK)
+    def social_logout(self) -> Response:
+        response = self.mixin_service.success_response(message="Success Logout", status_code=status.HTTP_200_OK)
         response.delete_cookie("access_token")
         response.delete_cookie("refresh_token")
         return response

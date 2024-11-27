@@ -1,7 +1,7 @@
 from typing import Dict
 
 from rest_framework import status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenVerifyView
@@ -28,7 +28,7 @@ class KakaoOauthView(BaseAPIView):
 
         try:
             social_id: str = self.oauth_service.get_user_uuid(user_profile_request)
-            user: SocialUser = SocialUser.objects.get(social_id=social_id)
+            user: SocialUser = SocialUser.objects.get(social_id=social_id, is_active=True)
 
             return self.oauth_service.social_login(user)
 
@@ -37,33 +37,17 @@ class KakaoOauthView(BaseAPIView):
 
         except Exception as e:
             response_message = {"error": str(e)}
-            return Response(response_message, status=e.status_code or status.HTTP_400_BAD_REQUEST)
+            return self.fail_response(message=response_message, status_code=status.HTTP_400_BAD_REQUEST)
 
 
-# class KakaoLoginAPI(SocialLoginServiceMixin):
-#     platform = "kakao"
-#     uuid_key = "id"
-#
-#     def get_username(self, user_profile: Dict[str, str | Dict]) -> str:
-#         kakao_account = user_profile.get("properties")
-#         uuid = self.get_user_uuid(user_profile)[:4]
-#
-#         if not kakao_account:
-#             return f"Unkown{uuid}"
-#
-#         return kakao_account.get("nickname", f"Unkown{uuid}")
+class SocialLogutAPI(BaseAPIView):
+    permission_classes = [
+        IsAuthenticated,
+    ]
+    oauth_service = KakaoOauthService()
 
-
-# class SocialLogutAPI(BaseAPIView, SocialOAuthService):
-#     permission_classes = (IsAuthenticated,)
-#
-#     @extend_schema(
-#         summary="소셜 로그아웃 API",
-#         tags=["로그아웃"],
-#         responses=OutputSerializer,
-#     )
-#     def post(self, request: Request) -> Response:
-#         return self.social_logout()
+    def post(self, request: Request) -> Response:
+        return self.oauth_service.social_logout()
 
 
 class TokenVerifyAPI(TokenVerifyView):

@@ -1,7 +1,7 @@
-from config import env
+from config.env import env, ROOT_DIR
 
 
-SECRET_KEY = env.ENV.str("SIGNING_KEY", default="django-insecure-pisj#el48ez%i%r+mb!$kd*$gkmi53c(cyo+#$472um$a#r_^&")
+SECRET_KEY = env.str("SIGNING_KEY", default="django-insecure-pisj#el48ez%i%r+mb!$kd*$gkmi53c(cyo+#$472um$a#r_^&")
 
 
 DJANGO_APPS = [
@@ -18,6 +18,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
+    "debug_toolbar",
 ]
 
 
@@ -41,6 +42,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "config.core_urls"
@@ -67,7 +69,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": env.ROOT_DIR / "db.sqlite3",
+        "NAME": ROOT_DIR / "db.sqlite3",
     }
 }
 
@@ -108,3 +110,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 from config.settings.jwt import *  # noqa
 from config.settings.rest_framework import *  # noqa
+from config.settings.kakao_oauth2 import *  # noqa

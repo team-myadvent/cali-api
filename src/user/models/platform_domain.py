@@ -16,11 +16,11 @@ class Secret:
 @dataclass
 class KakaoAuthDomain:
     info = Secret(
-        client_id=settings.ENV.str("KAKAO_CLIENT_ID", default=None),
-        redirect_uri=settings.ENV.str("KAKAO_REDIRECT_URI", default=None),
-        token_info_api=settings.ENV.str("KAKAO_TOKEN_INFO_API", default=None),
+        client_id=settings.KAKAO_OAUTH2_CLIENT_ID,
+        redirect_uri=settings.KAKAO_OAUTH2_REDIRECT_URI,
+        token_info_api=settings.KAKAO_OAUTH2_TOKEN_INFO_API,
     )
-    platform_url = settings.ENV.str("KAKAO_PLATFROM_URL", default=None)
+    platform_url = settings.KAKAO_OAUTH2_PLATFROM_URL
 
 
 @dataclass

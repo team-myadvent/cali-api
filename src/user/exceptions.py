@@ -1,19 +1,9 @@
 from rest_framework.exceptions import APIException
 
 
-class IncorrectSocialType(APIException):
-    status_code = 400
-    default_detail = "incorrect social type."
-
-
 class InvalidAuthorizationCode(APIException):
     status_code = 400
     default_detail = "invalid authorization code"
-
-
-class DoesNotSupportPlatform(APIException):
-    status_code = 400
-    default_detail = "does not support social platform"
 
 
 class PlatformServerException(APIException):
@@ -28,3 +18,8 @@ class PlatformServerException(APIException):
 class EmptyTokenException(APIException):
     status_code = 400
     default_detail = "token is empty or missing"
+
+
+class EmptyKakaoAccount(APIException):
+    status_code = 400
+    default_detail = "kakao account response has empty"
