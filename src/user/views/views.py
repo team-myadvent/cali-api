@@ -28,7 +28,7 @@ class KakaoOauthView(BaseAPIView):
 
         try:
             social_id: str = self.oauth_service.get_user_uuid(user_profile_request)
-            user: SocialUser = SocialUser.objects.get(social_id=social_id)
+            user: SocialUser = SocialUser.objects.get(social_id=social_id, is_active=True)
 
             return self.oauth_service.social_login(user)
 
