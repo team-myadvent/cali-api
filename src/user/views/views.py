@@ -37,7 +37,7 @@ class KakaoOauthView(BaseAPIView):
 
         except Exception as e:
             response_message = {"error": str(e)}
-            return Response(response_message, status=e.status_code or status.HTTP_400_BAD_REQUEST)
+            return self.fail_response(message=response_message, status_code=status.HTTP_400_BAD_REQUEST)
 
 
 class SocialLogutAPI(BaseAPIView):
