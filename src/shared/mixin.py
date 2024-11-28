@@ -34,9 +34,17 @@ class APIViewResponseMixin:
         """
         Returns Failure Response
         """
+
+        if isinstance(data, dict) and "detail" in data:
+            message = data["detail"]
+            data = None
+
         response_data = {
             "status": FAILURE,
             "status_code": status_code,
-            "data": {"message": message, **(data or {"data": None})},
+            "results": {
+                "message": message,
+                "data": data,
+            },
         }
         return Response(response_data, status=status_code)

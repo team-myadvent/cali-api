@@ -24,6 +24,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "user.apps.UserConfig",
+    "profiles.apps.ProfilesConfig",
 ]
 
 INSTALLED_APPS = [
@@ -43,6 +44,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "config.settings.middleware.RequestLoggingMiddleware",
 ]
 
 ROOT_URLCONF = "config.core_urls"
@@ -111,3 +113,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 from config.settings.jwt import *  # noqa
 from config.settings.rest_framework import *  # noqa
 from config.settings.kakao_oauth2 import *  # noqa
+from config.settings.logger import *  # noqa
