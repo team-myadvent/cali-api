@@ -7,12 +7,7 @@ class InvalidAuthorizationCode(APIException):
 
 
 class PlatformServerException(APIException):
-    status_code = 500
-
-    def __init__(self, error, error_description):
-        self.detail = {
-            "detail": f"error occurred getting access token: {error}, error_description: {error_description}"
-        }
+    status_code = 400
 
 
 class EmptyTokenException(APIException):
