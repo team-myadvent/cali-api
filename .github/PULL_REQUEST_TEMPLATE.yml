@@ -1,0 +1,66 @@
+name: ✨ Make a Pull Request
+description: 코드 변경 사항 추가 및 병합 요청
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 코드 변경 사항 제출
+        아래 양식을 작성하여 변경 사항에 대한 정보를 제공해주세요.
+
+  - type: input
+    id: title
+    attributes:
+      label: 제목
+      description: "Pull Request의 주요 내용을 간단히 설명해주세요."
+      placeholder: "ex) 검색 기능 추가"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: change-type
+    attributes:
+      label: 변경 유형
+      description: "코드 변경의 유형을 선택해주세요."
+      options:
+        - 📄 문서 업데이트 (Documentation Update)
+        - 🔧 기능 개선 (Enhancement)
+        - 🆕 신규 기능 추가 (New Feature)
+        - 🐞 버그 수정 (Bug Fix)
+        - 💡 리팩토링 (Refactoring)
+        - 🧪 테스트 추가/수정 (Test)
+    validations:
+      required: true
+
+  - type: textarea
+    id: changes-description
+    attributes:
+      label: 변경 사항 설명
+      description: "어떤 변경이 이루어졌는지 상세히 설명해주세요."
+      placeholder: |
+        변경 내용 요약:
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 참고 자료
+      description: "변경 사항에 대해 추가로 설명하거나 참고할 자료가 있다면 첨부해주세요."
+      placeholder: "예: 관련 Issue 링크, 디자인 문서, 스크린샷 등"
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: 제출 전 체크리스트
+      description: 제출 전에 다음 사항들을 확인해주세요.
+      options:
+        - label: 변경 사항이 테스트되었으며, 문제없음을 확인함
+          required: true
+        - label: 관련된 Issue 번호를 명확히 작성함
+          required: true
+        - label: 변경 사항에 필요한 라벨을 추가함 (Labels 설정)
+          required: true
