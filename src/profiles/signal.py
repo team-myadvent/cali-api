@@ -14,4 +14,4 @@ def create_user_profile(sender, instance, created, **kwagrs):
     logger.debug("user profile creating...")
     if created:
         notification = Notification.objects.create()
-        Profile.objects.create(user=instance, profile_photo=instance.profile_image, notification=notification)
+        Profile.objects.create(user=instance, profile_photo_url=instance.profile_image, notification=notification)
