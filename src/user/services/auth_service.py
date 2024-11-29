@@ -7,7 +7,7 @@ from django.contrib.auth.models import update_last_login
 from requests.models import Response as RequestsResponse
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import RefreshToken, Token
+from rest_framework_simplejwt.tokens import RefreshToken, Token, AccessToken
 
 from shared.mixin import APIViewResponseMixin
 from user.exceptions import InvalidAuthorizationCode, PlatformServerException, EmptyTokenException, EmptyKakaoAccount
@@ -139,13 +139,20 @@ class KakaoOauthService:
         refresh: Token = RefreshToken.for_user(user)
         access_token_lifetime: timedelta = settings.SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"]
         refresh_token_lifetime: timedelta = settings.SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"]
+        access_token: AccessToken = str(refresh.access_token)
+        response_data = {
+            "access_token": access_token,
+            "refresh_token": str(refresh),
+            "profile_id": user.profile.id,
+            "user_id": user.social_id,
+        }
 
         response: Response = self.mixin_service.success_response(
-            message="successfully logged in", status_code=status.HTTP_200_OK
+            message="successfully logged in", status_code=status.HTTP_200_OK, data=response_data
         )
 
         # NOTE: remove sametime option -> use default to possible different sites receive cookies
-        response.set_cookie("access_token", str(refresh.access_token), max_age=access_token_lifetime)
+        response.set_cookie("access_token", str(access_token), max_age=access_token_lifetime)
         response.set_cookie("refresh_token", str(refresh), httponly=True, max_age=refresh_token_lifetime)
         update_last_login(None, user)  # NOTE: update social user last login field
 
