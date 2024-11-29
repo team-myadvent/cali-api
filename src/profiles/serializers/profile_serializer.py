@@ -6,7 +6,7 @@ from profiles.models import Profile
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(source="user.username")
+    username = serializers.CharField(source="user.username")
     user_id = serializers.CharField(source="user.social_id")
     profile_id = serializers.CharField(source="id")
     is_notification_enable = serializers.BooleanField(source="notification.is_enabled")
@@ -26,7 +26,7 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = [
             "profile_id",
             "user_id",
-            "name",
+            "username",
             "profile_photo",
             "is_notification_enable",
             "notification_time",
