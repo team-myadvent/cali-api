@@ -37,18 +37,26 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source="user.username", required=False)
     is_notification_enable = serializers.BooleanField(source="notification.is_enabled", required=False)
     notification_time = serializers.TimeField(source="notification.notification_dtm", required=False)
+    profile_photo = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_profile_photo(obj):
+        if obj.profile_photo_file:
+            return obj.profile_photo_file.url
+
+        if obj.profile_photo_url:
+            return obj.profile_photo_url
 
     class Meta:
         model = Profile
         fields = [
             "username",
-            "profile_photo_file",
+            "profile_photo",
             "is_notification_enable",
             "notification_time",
         ]
 
     def update(self, instance, validated_data):
-        print(f"validate_date = {validated_data}")
         user_data = validated_data.pop("user", {})
         notification_data = validated_data.pop("notification", {})
         username = user_data.get("username")
