@@ -1,17 +1,22 @@
-from django.utils.functional import classproperty
-
 from profiles.exceptions import CouldNotFoundProfile
-from profiles.models import Profile
 
 
 class ProfileService:
-    @classproperty
-    def select_related(self):
-        return Profile.objects.select_related("user").all()
+    def __init__(self, model):
+        self.model = model
 
-    @staticmethod
-    def get_profile_by_profile_id(profile_id) -> Profile:
+    @property
+    def select_related(self):
+        return self.model.objects.select_related("user").all()
+
+    def get_profile_by_user(self, user):
         try:
-            return Profile.objects.get(id=profile_id)
-        except Profile.DoesNotExist:
+            return self.select_related.get(user=user)
+        except self.model.DoesNotExist:
+            raise CouldNotFoundProfile(user)
+
+    def get_profile_by_profile_id(self, profile_id):
+        try:
+            return self.model.objects.get(id=profile_id)
+        except self.model.DoesNotExist:
             raise CouldNotFoundProfile(profile_id)
