@@ -143,6 +143,7 @@ class KakaoOauthService:
         response_data = {
             "access_token": access_token,
             "refresh_token": str(refresh),
+            "username": user.username,
             "profile_id": user.profile.id,
             "user_id": user.social_id,
         }
