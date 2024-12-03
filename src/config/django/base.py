@@ -15,6 +15,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "corsheaders",
+    "storages",
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
@@ -25,6 +26,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "user.apps.UserConfig",
     "profiles.apps.ProfilesConfig",
+    "event_calendar.apps.EventCalendarConfig",
 ]
 
 INSTALLED_APPS = [
@@ -102,8 +104,10 @@ USE_I18N = True
 USE_TZ = False
 
 STATIC_URL = "/staticfiles/"
+STATIC_ROOT = str(ROOT_DIR / "staticfiles")
 
 MEDIA_URL = "/mediafiles/"
+MEDIA_ROOT = str(ROOT_DIR / "mediafiles")
 
 APPEND_SLASH = False
 
@@ -114,3 +118,4 @@ from config.settings.jwt import *  # noqa
 from config.settings.rest_framework import *  # noqa
 from config.settings.kakao_oauth2 import *  # noqa
 from config.settings.logger import *  # noqa
+from config.settings.storages import *  # noqa
