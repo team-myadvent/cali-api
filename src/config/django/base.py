@@ -27,6 +27,7 @@ LOCAL_APPS = [
     "user.apps.UserConfig",
     "profiles.apps.ProfilesConfig",
     "event_calendar.apps.EventCalendarConfig",
+    "search.apps.SearchConfig",
 ]
 
 INSTALLED_APPS = [
@@ -117,5 +118,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 from config.settings.jwt import *  # noqa
 from config.settings.rest_framework import *  # noqa
 from config.settings.kakao_oauth2 import *  # noqa
+from config.settings.google_api_client import *  # noqa
 from config.settings.logger import *  # noqa
 from config.settings.storages import *  # noqa

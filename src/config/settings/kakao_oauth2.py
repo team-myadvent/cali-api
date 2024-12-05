@@ -1,8 +1,4 @@
-from pathlib import Path
 from config.env import env, ENVS_DIR
-
-
-env.read_env(Path(ENVS_DIR, ".dev", ".django"))
 
 
 KAKAO_OAUTH2_CLIENT_ID = env.str("KAKAO_OAUTH2_CLIENT_ID", default="")
