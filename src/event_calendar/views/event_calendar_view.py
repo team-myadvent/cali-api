@@ -104,12 +104,9 @@ class EventCalendarShareAPI(BaseAPIView):
             calendar.is_shareable = True
             calendar.save()
 
-        if calendars:
-            first_calendar = calendars.first()
+        first_calendar = calendars.first()
 
-            return self.success_response(
-                data={"share_link": f"{settings.DOMAIN}/api/v1/calendars/share/{first_calendar.share_key}"},
-                message="Successfully shared all calendars",
-            )
-
-        return self.fail_response(message="No calendars found to share")
+        return self.success_response(
+            data={"share_link": f"{settings.DOMAIN}/api/v1/calendars/share/{first_calendar.share_key}"},
+            message="Successfully shared all calendars",
+        )
