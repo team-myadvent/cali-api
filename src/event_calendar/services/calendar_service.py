@@ -1,3 +1,7 @@
+from event_calendar.exceptions import ImageFileRequired
+from event_calendar.models.share_image import ShareImage
+
+
 class CalendarService:
     def __init__(self, model):
         self.model = model
@@ -21,3 +25,13 @@ class CalendarService:
         if not queryset.exists():
             return None
         return queryset
+
+    @staticmethod
+    def create_event_calendar_share_image(request, calendar_dt=None):
+        request_user = request.user
+        image = request.data.get("export_image")
+
+        if not image:
+            raise ImageFileRequired()
+
+        return ShareImage.objects.create(user=request_user, calendar_dt=calendar_dt, share_image=image)

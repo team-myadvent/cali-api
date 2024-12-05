@@ -44,6 +44,16 @@ class EventCalendarDetailAPI(BaseAPIView):
 
         return self.success_response(data=serializer.data, message="Successfully update profile")
 
+    def post(self, request, calendar_id, *args, **kwargs):
+        calendar_card = self.service.get_event_calendar_by_calendar_id(calendar_id)
+
+        if not calendar_card:
+            return self.fail_response(message=f"Does not found calendar card, id: `{calendar_id}`")
+
+        calendar_dt = calendar_card.calendar_dt
+        self.service.create_event_calendar_share_image(request, calendar_dt)
+        return self.success_response(message="Successfully saved shared image")
+
 
 class EventCalendarListAPI(BaseAPIView):
     service = CalendarService(EventCalendar)
@@ -65,6 +75,10 @@ class EventCalendarListAPI(BaseAPIView):
 
         return self.success_response(data=calendar_serializer.data, message="Successfully retrieved calendar")
 
+    def post(self, request):
+        self.service.create_event_calendar_share_image(request)
+        return self.success_response(message="Successfully saved shared image")
+
 
 class EventCalendarShareAPI(BaseAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -83,16 +97,16 @@ class EventCalendarShareAPI(BaseAPIView):
     def post(self, request):
         calendars = self.service.get_event_calendar_all_for_request_user(request.user)
 
+        if not calendars:
+            return self.fail_response(message=f"{request.user.username} does not found calendars")
+
         for calendar in calendars:
             calendar.is_shareable = True
             calendar.save()
 
-        if calendars:
-            first_calendar = calendars.first()
+        first_calendar = calendars.first()
 
-            return self.success_response(
-                data={"share_link": f"{settings.DOMAIN}/api/v1/calendars/share/{first_calendar.share_key}"},
-                message="Successfully shared all calendars",
-            )
-
-        return self.fail_response(message="No calendars found to share")
+        return self.success_response(
+            data={"share_link": f"{settings.DOMAIN}/api/v1/calendars/share/{first_calendar.share_key}"},
+            message="Successfully shared all calendars",
+        )

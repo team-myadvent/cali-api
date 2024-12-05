@@ -19,15 +19,17 @@ def create_user_calendar(sender, instance, created, **kwagrs):
     logger.debug("user default calendar creating...")
 
     today = date.today()
+    days = 31
     month = 12
     year = today.year
 
-    seq_values = list(range(1, 26))
+    # FIXME: change the calendar date create method, use not date only
+    seq_values = list(range(1, days))
     random.shuffle(seq_values)
 
     if created:
         share_key = uuid.uuid4()
-        for day, seq in zip(range(1, 26), seq_values):
+        for day, seq in zip(range(1, days), seq_values):
             current_date = date(year, month, day)
 
             EventCalendar.objects.create(
