@@ -18,3 +18,8 @@ class EmptyTokenException(APIException):
 class EmptyKakaoAccount(APIException):
     status_code = 400
     default_detail = "kakao account response has empty"
+
+
+class UserNotFound(APIException):
+    status_code = 400
+    default_detail = "Does not found user"
