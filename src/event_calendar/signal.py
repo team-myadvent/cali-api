@@ -1,5 +1,4 @@
 import logging
-import uuid
 import random
 from datetime import date
 
@@ -20,23 +19,23 @@ def create_user_calendar(sender, instance, created, **kwagrs):
 
     today = date.today()
     month = 12
+    max_days = 26
     year = today.year
 
-    seq_values = list(range(1, 26))
+    seq_values = list(range(1, max_days))
     random.shuffle(seq_values)
 
     if created:
-        share_key = uuid.uuid4()
-        for day, seq in zip(range(1, 26), seq_values):
+        for day, seq in zip(range(1, max_days), seq_values):
             current_date = date(year, month, day)
 
             EventCalendar.objects.create(
                 user=instance,
                 youtube=YoutubeMusicEvent.objects.create(user=instance),
                 calendar_dt=current_date,
-                title=f"default title - {current_date}",
-                comment=f"default comment - {current_date}",
-                is_shareable=True,
-                share_key=share_key,
+                seq_no=day,
+                title=f"{current_date}",
+                comment=f"{current_date}",
+                comment_detail="",
                 default_image=S3_IMAGE_URL.format(seq=seq),
             )
