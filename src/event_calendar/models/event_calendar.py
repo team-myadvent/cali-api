@@ -13,10 +13,10 @@ class EventCalendar(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="calendar")
     youtube = models.ForeignKey(YoutubeMusicEvent, on_delete=models.CASCADE, related_name="yotubue", null=True)
     calendar_dt = models.DateField(help_text="캘린더 날짜")
-    title = models.CharField(max_length=20, default="", help_text="이미지에 표현 될 메시지")
-    comment = models.CharField(max_length=20, help_text="캘린더에 등록 될 메시지")
-    is_shareable = models.BooleanField(default=False, help_text="캘린더 공유하기 여부")
-    share_key = models.UUIDField(default=uuid.uuid4, editable=False, help_text="외부 사용자 접근 키")
+    seq_no = models.IntegerField(default=0, help_text="캘린더 인덱스 번호")
+    title = models.CharField(max_length=255, default="", help_text="유튜브 음악 제목")
+    comment = models.CharField(max_length=100, help_text="이미지 표현 될 메시지")
+    comment_detail = models.TextField(null=True, blank=True, help_text="캘린더 메시지")
     default_image = models.URLField(help_text="캘린더 기본 이미지")
     thumbnail_file = models.ImageField(
         upload_to="calendar_thumbnail", blank=True, null=True, help_text="캘린더 사용자 등록 이미지"
