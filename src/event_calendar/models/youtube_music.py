@@ -10,7 +10,6 @@ User = get_user_model()
 class YoutubeMusicEvent(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="youtube_music")
     video_id = models.CharField(max_length=100, null=True, blank=True, help_text="유튜브 비디오 아이디")
-    music_url = models.URLField(max_length=255, null=True, blank=True, help_text="유튜브 비디오 링크")
     thumbnail_url = models.URLField(max_length=255, null=True, blank=True, help_text="유튜브 섬네일 링크")
 
     class Meta:

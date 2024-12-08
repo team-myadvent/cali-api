@@ -5,7 +5,7 @@ from event_calendar.models import EventCalendar
 
 class CalendarCardSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(source="user.id", read_only=True)
-    youtube_music_link = serializers.URLField(source="youtube.music_url", read_only=True)
+    youtube_video_id = serializers.URLField(source="youtube.video_id", read_only=True)
     calendar_thumbnail = serializers.SerializerMethodField()
 
     @staticmethod
@@ -40,7 +40,7 @@ class CalendarCardSerializer(serializers.ModelSerializer):
             "title",
             "comment",
             "comment_detail",
-            "youtube_music_link",
+            "youtube_video_id",
             "calendar_thumbnail",
         ]
 
@@ -52,8 +52,7 @@ class CalendarListSerializer(serializers.ListSerializer):
 class UpdateCalendarCardSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(source="user.id", read_only=True)
     youtube_video_id = serializers.CharField(source="youtube.video_id")
-    youtube_music_link = serializers.URLField(source="youtube.music_url")
-    youtubue_thumbnail_link = serializers.URLField(source="youtube.thumbnail_url", write_only=True)
+    youtube_thumbnail_link = serializers.URLField(source="youtube.thumbnail_url", write_only=True)
     calendar_thumbnail = serializers.SerializerMethodField()
     thumbnail_file = serializers.ImageField(use_url=True, write_only=True)
 
@@ -83,15 +82,11 @@ class UpdateCalendarCardSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         youtube_data = validated_data.pop("youtube", {})
         youtube_thumbnail = youtube_data.get("thumbnail_url")
-        youtube_music = youtube_data.get("music_url")
         youtube_video_id = youtube_data.get("video_id")
 
         thumbnail_file = validated_data.get("thumbnail_file")
 
-        if youtube_music or youtube_thumbnail or youtube_video_id:
-            if youtube_music != instance.youtube.music_url and youtube_music:
-                instance.youtube.music_url = youtube_music
-
+        if youtube_thumbnail or youtube_video_id:
             if youtube_thumbnail != instance.youtube.thumbnail_url and youtube_thumbnail:
                 instance.youtube.thumbnail_url = youtube_thumbnail
 
@@ -104,7 +99,7 @@ class UpdateCalendarCardSerializer(serializers.ModelSerializer):
             instance.thumbnail_file = thumbnail_file
 
         for attr, value in validated_data.items():
-            if attr not in ["youtube_thumbnail", "youtube_music", "thumbnail_file"]:
+            if attr not in ["youtube_thumbnail", "thumbnail_file"]:
                 setattr(instance, attr, value)
 
         instance.save()
@@ -120,8 +115,7 @@ class UpdateCalendarCardSerializer(serializers.ModelSerializer):
             "comment",
             "comment_detail",
             "youtube_video_id",
-            "youtube_music_link",
-            "youtubue_thumbnail_link",
+            "youtube_thumbnail_link",
             "calendar_thumbnail",
             "thumbnail_file",
         ]
