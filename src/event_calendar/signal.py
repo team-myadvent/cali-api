@@ -18,6 +18,7 @@ def create_user_calendar(sender, instance, created, **kwagrs):
     logger.debug("user default calendar creating...")
 
     today = date.today()
+    days = 31
     month = 12
     max_days = 26
     year = today.year
