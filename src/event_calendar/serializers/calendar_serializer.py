@@ -5,7 +5,7 @@ from event_calendar.models import EventCalendar
 
 class CalendarCardSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(source="user.id", read_only=True)
-    youtube_music_link = serializers.URLField(source="youtube.music_url", read_only=False)
+    youtube_music_link = serializers.URLField(source="youtube.music_url", read_only=True)
     calendar_thumbnail = serializers.SerializerMethodField()
 
     @staticmethod
