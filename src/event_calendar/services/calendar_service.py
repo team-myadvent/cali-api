@@ -8,7 +8,7 @@ class CalendarService:
 
     def get_event_calendar_by_calendar_id(self, user, calendar_id):
         try:
-            return self.model.objects.get(user=user, id=calendar_id)
+            return self.model.objects.get(user=user, seq_no=calendar_id)
         except self.model.DoesNotExist:
             raise CalendarCardNotFound
 
