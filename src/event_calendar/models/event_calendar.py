@@ -15,7 +15,7 @@ class EventCalendar(TimeStampedModel):
     calendar_dt = models.DateField(help_text="캘린더 날짜")
     seq_no = models.IntegerField(default=0, help_text="캘린더 인덱스 번호")
     title = models.CharField(max_length=255, default="", help_text="유튜브 음악 제목")
-    comment = models.CharField(max_length=100, help_text="이미지 표현 될 메시지")
+    comment = models.CharField(max_length=100, default="", help_text="이미지 표현 될 메시지")
     comment_detail = models.TextField(null=True, blank=True, help_text="캘린더 메시지")
     default_image = models.URLField(help_text="캘린더 기본 이미지")
     thumbnail_file = models.ImageField(
