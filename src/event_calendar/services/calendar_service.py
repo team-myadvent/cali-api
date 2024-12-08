@@ -2,7 +2,6 @@ from event_calendar.exceptions import CalendarCardNotFound
 from event_calendar.models import ShareImage
 
 
-
 class CalendarService:
     def __init__(self, model):
         self.model = model
