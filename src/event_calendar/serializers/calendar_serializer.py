@@ -39,9 +39,8 @@ class CalendarCardSerializer(serializers.ModelSerializer):
             "calendar_dt",
             "title",
             "comment",
+            "comment_detail",
             "youtube_music_link",
-            "is_shareable",
-            "share_key",
             "calendar_thumbnail",
         ]
 
@@ -114,10 +113,9 @@ class UpdateCalendarCardSerializer(serializers.ModelSerializer):
             "calendar_dt",
             "title",
             "comment",
+            "comment_detail",
             "youtube_music_link",
             "youtubue_thumbnail_link",
-            "is_shareable",
-            "share_key",
             "calendar_thumbnail",
             "thumbnail_file",
         ]
