@@ -12,15 +12,13 @@ YOUTUBE = build(settings.YOUTUBE_API_SERVICE_NAME, settings.YOUTUBE_API_VERSION,
 class YoutubeSearchResponse:
     videoId: str
     title: str
-    url: str
 
     @classmethod
     def from_dict(cls, serach_response):
         video_id = serach_response["id"]["videoId"]
         title = serach_response["snippet"]["title"]
-        url = f"https://www.youtube.com/watch?v={video_id}"
 
-        return cls(video_id, title, url)
+        return cls(video_id, title)
 
     def to_dict(self):
         return asdict(self)
