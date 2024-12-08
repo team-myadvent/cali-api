@@ -25,4 +25,3 @@ class EventCalendar(TimeStampedModel):
     class Meta:
         app_label = "event_calendar"
         db_table = "event_calendar"
-        (models.Index(fields=["is_shareable", "share_key"]),)

@@ -5,7 +5,6 @@ from datetime import date
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-
 from config.django.base import AUTH_USER_MODEL
 from config.settings.storages import S3_IMAGE_URL
 from event_calendar.models import EventCalendar, YoutubeMusicEvent
@@ -18,7 +17,6 @@ def create_user_calendar(sender, instance, created, **kwagrs):
     logger.debug("user default calendar creating...")
 
     today = date.today()
-    days = 31
     month = 12
     max_days = 26
     year = today.year
