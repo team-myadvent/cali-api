@@ -84,15 +84,19 @@ class UpdateCalendarCardSerializer(serializers.ModelSerializer):
         youtube_data = validated_data.pop("youtube", {})
         youtube_thumbnail = youtube_data.get("thumbnail_url")
         youtube_music = youtube_data.get("music_url")
+        youtube_video_id = youtube_data.get("video_id")
 
         thumbnail_file = validated_data.get("thumbnail_file")
 
-        if youtube_music or youtube_thumbnail:
-            if youtube_music != instance.youtube.music_url:
+        if youtube_music or youtube_thumbnail or youtube_video_id:
+            if youtube_music != instance.youtube.music_url and youtube_music:
                 instance.youtube.music_url = youtube_music
 
-            if youtube_thumbnail != instance.youtube.thumbnail_url:
+            if youtube_thumbnail != instance.youtube.thumbnail_url and youtube_thumbnail:
                 instance.youtube.thumbnail_url = youtube_thumbnail
+
+            if youtube_video_id != instance.youtube.video_id and youtube_video_id:
+                instance.youtube.video_id = youtube_video_id
 
             instance.youtube.save()
 
