@@ -10,7 +10,6 @@ MAX_DAYS = 26
 YEAR = TODAY.year
 
 SEQ_VALUES = list(range(1, MAX_DAYS))
-random.shuffle(SEQ_VALUES)
 
 
 def get_default_calendar_data():
@@ -21,12 +20,12 @@ def get_default_calendar_data():
 
         default_data.append(
             {
+                "id": "",
                 "calendar_dt": current_date,
                 "title": f"{current_date}",
                 "comment": f"{current_date}",
                 "comment_detail": "",
-                "youtube_music_link": None,
-                "default_image": S3_IMAGE_URL.format(seq=seq),
+                "calendar_thumbnail": S3_IMAGE_URL.format(seq=seq),
             }
         )
     return default_data
