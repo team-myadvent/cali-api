@@ -26,7 +26,7 @@ def get_youtube_search_results(query):
         title = video.find_element(By.CSS_SELECTOR, "#video-title").text
         link = video.find_element(By.CSS_SELECTOR, "#video-title").get_attribute("href")
         video_id = link.split("v=")[-1].split("&")[0]
-        results.append({"title": title, "link": link, "vidoe_id": video_id})
+        results.append({"title": title, "link": link, "youtube_video_id": video_id})
 
     driver.quit()
     return results
