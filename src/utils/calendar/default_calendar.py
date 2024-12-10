@@ -25,6 +25,7 @@ def get_default_calendar_data():
                 "title": f"{current_date}",
                 "comment": f"{current_date}",
                 "comment_detail": "",
+                "youtube_video_id": "",
                 "calendar_thumbnail": S3_IMAGE_URL.format(seq=seq),
             }
         )
