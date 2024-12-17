@@ -1,12 +1,14 @@
 from rest_framework import serializers
 
 from event_calendar.models import EventCalendar
+from guest_book.serializers.guest_book_serializer import GuestBookSerializer
 
 
 class CalendarCardSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(source="user.id", read_only=True)
     youtube_video_id = serializers.URLField(source="youtube.video_id", read_only=True)
     calendar_thumbnail = serializers.SerializerMethodField()
+    guestbooks = GuestBookSerializer(many=True, read_only=True)
 
     @staticmethod
     def get_calendar_thumbnail(obj):
@@ -37,6 +39,7 @@ class CalendarCardSerializer(serializers.ModelSerializer):
             "id",
             "user_id",
             "calendar_dt",
+            "guestbooks",
             "title",
             "comment",
             "comment_detail",
@@ -51,7 +54,7 @@ class CalendarListSerializer(serializers.ListSerializer):
 
 class UpdateCalendarCardSerializer(serializers.ModelSerializer):
     user_id = serializers.CharField(source="user.id", read_only=True)
-    youtube_video_id = serializers.CharField(source="youtube.video_id")
+    youtube_video_id = serializers.CharField(source="youtube.video_id", allow_null=True, allow_blank=True)
     youtube_thumbnail_link = serializers.URLField(source="youtube.thumbnail_url", write_only=True)
     calendar_thumbnail = serializers.SerializerMethodField()
     thumbnail_file = serializers.ImageField(use_url=True, write_only=True)
