@@ -28,6 +28,7 @@ LOCAL_APPS = [
     "profiles.apps.ProfilesConfig",
     "event_calendar.apps.EventCalendarConfig",
     "search.apps.SearchConfig",
+    "guest_book.apps.GuestBookConfig",
 ]
 
 INSTALLED_APPS = [
