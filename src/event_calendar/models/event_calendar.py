@@ -8,7 +8,7 @@ User = get_user_model()
 
 
 class EventCalendar(TimeStampedModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="calendar")
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name="calendar")
     youtube = models.ForeignKey(YoutubeMusicEvent, on_delete=models.CASCADE, related_name="yotubue", null=True)
     calendar_dt = models.DateField(help_text="캘린더 날짜")
     seq_no = models.IntegerField(default=0, help_text="캘린더 인덱스 번호")
