@@ -4,7 +4,6 @@ from event_calendar.models import EventCalendar
 from event_calendar.serializers.calendar_serializer import CalendarListSerializer, CalendarCardSerializer
 from event_calendar.services.calendar_service import CalendarService
 from shared.api import BaseAPIView
-from utils.calendar.default_calendar import get_default_calendar_data
 
 
 class EventCalendarDefaultAPI(BaseAPIView):
