@@ -15,13 +15,6 @@ class EventCalendarListAPI(BaseAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     service = CalendarService(EventCalendar)
 
-    def get_event_calendar(self, request=None, calendar_id=None):
-        if calendar_id:
-            return self.service.get_event_calendar_all_by_public_key(calendar_id)
-
-        if request:
-            return self.service.get_event_calendar_all_for_request_user(request.user)
-
     @staticmethod
     def get_user(user_id):
         try:
