@@ -25,3 +25,4 @@ class EventCalendar(TimeStampedModel):
     class Meta:
         app_label = "event_calendar"
         db_table = "event_calendar"
+        ordering = ["calendar_dt", "seq_no"]
