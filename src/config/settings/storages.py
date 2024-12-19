@@ -9,6 +9,7 @@ AWS_S3_REGION_NAME = env.str("AWS_S3_REGION_NAME", default="")
 AWS_STORAGE_BUCKET_NAME = env.str("AWS_STORAGE_BUCKET_NAME", default="")
 AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
 AWS_S3_URL = env.str("AWS_S3_URL", default="")
+AWS_LAMBDA_FUNCTION_NAME = env.str("AWS_LAMBDA_FUNCTION_NAME", default="")
 
 USE_S3 = env.bool("USE_S3", default=False)
 
