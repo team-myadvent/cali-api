@@ -10,6 +10,7 @@ AWS_STORAGE_BUCKET_NAME = env.str("AWS_STORAGE_BUCKET_NAME", default="")
 AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
 AWS_S3_URL = env.str("AWS_S3_URL", default="")
 AWS_LAMBDA_FUNCTION_NAME = env.str("AWS_LAMBDA_FUNCTION_NAME", default="")
+S3_IMAGE_URL = "default_{seq}.png"
 
 USE_S3 = env.bool("USE_S3", default=False)
 
