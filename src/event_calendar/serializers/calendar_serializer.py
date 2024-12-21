@@ -46,6 +46,7 @@ class CalendarCardSerializer(serializers.ModelSerializer):
             "comment_detail",
             "youtube_video_id",
             "calendar_thumbnail",
+            "thumbnail_file",
         ]
 
 
