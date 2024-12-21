@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from event_calendar.models import EventCalendar
 from guest_book.serializers.guest_book_serializer import GuestBookSerializer
+from utils.event_calendar.youtube_thumbnail_image import get_youtube_thumbnail_image_size
 
 
 class CalendarCardSerializer(serializers.ModelSerializer):
@@ -89,8 +90,15 @@ class UpdateCalendarCardSerializer(serializers.ModelSerializer):
 
         thumbnail_file = validated_data.get("thumbnail_file")
 
+        # NOTE: 유튜브 썸네일 이미지를 입력 하였거나 유튜브 비디오 아이디를 입력 한 경우
         if youtube_thumbnail or youtube_video_id:
             if youtube_thumbnail != instance.youtube.thumbnail_url and youtube_thumbnail:
+                youtube_thumbnail_size = get_youtube_thumbnail_image_size(youtube_thumbnail)
+
+                # NOTE: default thumbnail size가 120, 90 일 때 저장 하지 않음
+                if youtube_thumbnail_size.is_invalid_image_size():
+                    youtube_thumbnail = youtube_thumbnail.replace("maxresdefault", "hqdefault")
+
                 instance.youtube.thumbnail_url = youtube_thumbnail
 
             if youtube_video_id != instance.youtube.video_id and youtube_video_id:
