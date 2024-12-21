@@ -16,13 +16,13 @@ class CalendarService:
         return calendar_card
 
     def get_event_calendar_all_for_request_user(self, user):
-        queryset = self.model.objects.select_related("user", "youtube").filter(user=user)
+        queryset = self.model.objects.select_related("user", "youtube").prefetch_related("guestbooks").filter(user=user)
         calendar_list = list(queryset)
 
         if not calendar_list:
             return None
 
-        return queryset
+        return calendar_list
 
     @staticmethod
     def create_share_image(user, share_image):
