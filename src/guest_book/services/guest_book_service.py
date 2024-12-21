@@ -16,6 +16,9 @@ class GuestBookService:
         if not request.user.is_authenticated:
             user = None
 
+        if not writer_name and request.user.is_authenticated:
+            writer_name = user.username
+
         if not writer_name:
             raise GuestBookEmptyWriterName()
 
