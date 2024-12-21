@@ -101,14 +101,12 @@ class UpdateCalendarCardSerializer(serializers.ModelSerializer):
                     youtube_thumbnail = youtube_thumbnail.replace("maxresdefault", "hqdefault")
 
                 instance.youtube.thumbnail_url = youtube_thumbnail
-
             if youtube_video_id != instance.youtube.video_id and youtube_video_id:
                 instance.youtube.video_id = youtube_video_id
 
             instance.youtube.save()
 
-        if thumbnail_file:
-            instance.thumbnail_file = thumbnail_file
+        instance.thumbnail_file = thumbnail_file
 
         for attr, value in validated_data.items():
             if attr not in ["youtube_thumbnail", "thumbnail_file"]:
