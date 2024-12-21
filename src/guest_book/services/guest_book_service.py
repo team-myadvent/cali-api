@@ -1,4 +1,4 @@
-from guest_book.exceptions import GuestBookEmptyContent
+from guest_book.exceptions import GuestBookEmptyContent, GuestBookEmptyWriterName
 
 
 class GuestBookService:
@@ -15,6 +15,9 @@ class GuestBookService:
 
         if not request.user.is_authenticated:
             user = None
+
+        if not writer_name:
+            raise GuestBookEmptyWriterName()
 
         return self.model.objects.create(
             user=user,
