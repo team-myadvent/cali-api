@@ -18,11 +18,7 @@ class GuestBookAPI(BaseAPIView):
     calendar_service = CalendarService(EventCalendar)
 
     def post(self, request, social_id, calendar_id, *args, **kwargs):
-        user = request.user
-
-        if not user.is_authenticated:
-            user = UserService.get_user_by_social_id(social_id)
-
+        user = UserService.get_user_by_social_id(social_id)
         calendar = self.calendar_service.get_event_calendar_by_calendar_id(user, calendar_id)
 
         self.service.create_guest_book(calendar, user, request)
