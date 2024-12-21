@@ -59,7 +59,7 @@ class UpdateCalendarCardSerializer(serializers.ModelSerializer):
     youtube_video_id = serializers.CharField(source="youtube.video_id", allow_null=True, allow_blank=True)
     youtube_thumbnail_link = serializers.URLField(source="youtube.thumbnail_url", write_only=True)
     calendar_thumbnail = serializers.SerializerMethodField()
-    thumbnail_file = serializers.ImageField(use_url=True, write_only=True)
+    thumbnail_file = serializers.ImageField(allow_null=True, required=False, use_url=True, write_only=True)
 
     @staticmethod
     def get_calendar_thumbnail(obj):
