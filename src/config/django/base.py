@@ -19,7 +19,6 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
-    "debug_toolbar",
 ]
 
 
@@ -47,7 +46,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "config.settings.middleware.RequestLoggingMiddleware",
 ]
 
@@ -122,3 +120,6 @@ from config.settings.kakao_oauth2 import *  # noqa
 from config.settings.google_api_client import *  # noqa
 from config.settings.logger import *  # noqa
 from config.settings.storages import *  # noqa
+from config.settings.debug_toolbar import DebugToolbarSetup  # noqa
+
+INSTALLED_APPS, MIDDLEWARE = DebugToolbarSetup.do_settings(INSTALLED_APPS, MIDDLEWARE)
