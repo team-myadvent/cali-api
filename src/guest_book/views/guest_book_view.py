@@ -18,8 +18,9 @@ class GuestBookAPI(BaseAPIView):
     calendar_service = CalendarService(EventCalendar)
 
     def post(self, request, social_id, calendar_id, *args, **kwargs):
-        user = UserService.get_user_by_social_id(social_id)
-        calendar = self.calendar_service.get_event_calendar_by_calendar_id(user, calendar_id)
+        calendar_owner = UserService.get_user_by_social_id(social_id)
+        calendar = self.calendar_service.get_event_calendar_by_calendar_id(calendar_owner, calendar_id)
+        user = request.user
 
         self.service.create_guest_book(calendar, user, request)
         return self.success_response(message="Successfully created guest book", status_code=HTTP_201_CREATED)
