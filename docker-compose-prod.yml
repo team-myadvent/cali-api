@@ -13,7 +13,7 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=config.django.prd
     env_file:
-      - ./.envs/.dev/.django
+      - ./.envs/.prd/.django
     restart: unless-stopped
     networks:
       - api-server
