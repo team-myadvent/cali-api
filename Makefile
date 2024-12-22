@@ -1,4 +1,4 @@
-RUNFILE ?= docker-compose-dev.yml
+RUNFILE ?= docker-compose-prod.yml
 
 restart:
 	@echo "Restarting services using ${RUNFILE}..."

@@ -1,0 +1,38 @@
+services:
+  api:
+    container_name: api-server
+    build:
+      context: .
+      dockerfile: docker/prd/django/Dockerfile
+    command: /start
+    volumes:
+      - .:/app
+    ports:
+      - '8080:8080'
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.django.prd
+    env_file:
+      - ./.envs/.dev/.django
+    restart: unless-stopped
+    networks:
+      - api-server
+
+  nginx:
+    container_name: nginx
+    restart: always
+    depends_on:
+        - api
+    volumes:
+      - /etc/geoip/:/etc/nginx/geoip
+    build:
+        context: ./docker/prd/nginx
+        dockerfile: Dockerfile
+    ports:
+        - "80:80"
+        - "443:443"
+    networks:
+        - api-server
+
+networks:
+    api-server:
+        driver: bridge
