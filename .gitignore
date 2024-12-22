@@ -129,6 +129,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.envs/
+.python-version
 
 # Spyder project settings
 .spyderproject
@@ -163,3 +165,11 @@ cython_debug/
 
 # OS
 .DS_Store
+
+# UV package manager
+.python-versiono
+
+# Django application directory
+staticfiles/
+mediafiles/
+logs/

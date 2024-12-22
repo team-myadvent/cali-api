@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# error to exit process
+set -o errexit
+
+# pipeline ar executed successfully
+set -o pipefail
+
+# sciprt to exit unitialized variable is usesd
+set -o nounset
+
+echo "==> Django setup, executing: migrate pro"
+python3 src/manage.py migrate --no-input
+echo "==> collections setup, executing: collectstatic"
+python3 src/manage.py collectstatic --no-input
+cd src
+echo "==> runserver by gunicorn '0:8080' port bind"
+exec gunicorn --bind 0:8080 config.wsgi:application

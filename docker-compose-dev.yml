@@ -1,0 +1,36 @@
+services:
+  api:
+    container_name: api-server
+    build:
+      context: .
+      dockerfile: docker/dev/django/Dockerfile
+    command: /start
+    volumes:
+      - .:/app
+    ports:
+      - '8080:8080'
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.django.dev
+    env_file:
+      - ./.envs/.dev/.django
+    restart: unless-stopped
+    networks:
+      - api-server
+
+  nginx:
+    container_name: nginx
+    restart: always
+    depends_on:
+        - api
+    build:
+        context: ./docker/dev/nginx
+        dockerfile: Dockerfile
+    ports:
+        - "80:80"
+        - "443:443"
+    networks:
+        - api-server
+
+networks:
+    api-server:
+        driver: bridge
