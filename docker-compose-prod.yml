@@ -24,7 +24,7 @@ services:
     depends_on:
         - api
     volumes:
-      - /etc/geoip/:/etc/nginx/geoip
+      - /etc/geoip:/etc/nginx/geoip
     build:
         context: ./docker/prd/nginx
         dockerfile: Dockerfile
